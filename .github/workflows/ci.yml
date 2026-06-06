@@ -1,0 +1,32 @@
+name: CI - Conecta Trabalho
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  qualidade-build-testes:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Análise estática
+        run: npm run lint
+
+      - name: Testes automatizados
+        run: npm run test
+
+      - name: Build de produção
+        run: npm run build
